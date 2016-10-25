@@ -26,7 +26,7 @@ def test_comment(get_tokens):
 
 def test_load(get_tokens):
     assert get_tokens('LOAD s0, 123') == [
-        ('NAME', 'LOAD'),
+        ('INSTRUCTION', 'LOAD'),
         ('REGISTER', 's0'),
         ('COMMA', ','),
         ('NUMBER', 123)
@@ -35,7 +35,7 @@ def test_load(get_tokens):
 
 def test_add(get_tokens):
     assert get_tokens('ADD s5, 23') == [
-        ('NAME', 'ADD'),
+        ('INSTRUCTION', 'ADD'),
         ('REGISTER', 's5'),
         ('COMMA', ','),
         ('NUMBER', 23)
@@ -43,22 +43,22 @@ def test_add(get_tokens):
 
 
 def test_equ(get_tokens):
-    assert get_tokens('a EQU 123') == [
-        ('NAME', 'a'),
-        ('NAME', 'EQU'),
+    assert get_tokens('variable_name EQU 123') == [
+        ('NAME', 'variable_name'),
+        ('INSTRUCTION', 'EQU'),
         ('NUMBER', 123)
     ]
 
 
 def test_jump_to_address(get_tokens):
     assert get_tokens('JUMP 123') == [
-        ('NAME', 'JUMP'),
+        ('INSTRUCTION', 'JUMP'),
         ('NUMBER', 123)
     ]
 
 
 def test_jump_to_label(get_tokens):
     assert get_tokens('JUMP foo') == [
-        ('NAME', 'JUMP'),
+        ('INSTRUCTION', 'JUMP'),
         ('NAME', 'foo')
     ]
