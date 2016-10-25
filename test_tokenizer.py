@@ -11,7 +11,6 @@ def lexer():
 
 @pytest.fixture(scope='session')
 def get_tokens(lexer):
-
     def _tokens_gen(input_string):
         lexer.input(input_string)
 
@@ -33,12 +32,21 @@ def test_load(get_tokens):
     ]
 
 
-def test_add(get_tokens):
+def test_add_value(get_tokens):
     assert get_tokens('ADD s5, 23') == [
         ('INSTRUCTION', 'ADD'),
         ('REGISTER', 's5'),
         ('COMMA', ','),
         ('NUMBER', 23)
+    ]
+
+
+def test_add_regs(get_tokens):
+    assert get_tokens('ADD s1, s2') == [
+        ('INSTRUCTION', 'ADD'),
+        ('REGISTER', 's1'),
+        ('COMMA', ','),
+        ('REGISTER', 's2')
     ]
 
 
