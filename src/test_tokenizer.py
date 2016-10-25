@@ -1,7 +1,7 @@
 import pytest
 from ply import lex
 
-import tokenizer_rules
+from src import tokenizer_rules
 
 
 @pytest.fixture(scope='session')

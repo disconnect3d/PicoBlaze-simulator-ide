@@ -1,10 +1,9 @@
 import pytest
+from parser_rules import Parser
 from ply import lex, yacc
 
-
-import tokenizer_rules
-from parser_rules import Parser
-from tokenizer_rules import tokens
+from src import tokenizer_rules
+from src.tokenizer_rules import tokens
 
 
 @pytest.fixture(scope='session')

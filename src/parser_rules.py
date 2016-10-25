@@ -1,11 +1,5 @@
 # this file is used by ply.yacc
 
-import ply.yacc as yacc
-from ply import lex
-
-import tokenizer_rules
-from tokenizer_rules import tokens
-
 
 class Parser(object):
     def __init__(self):
