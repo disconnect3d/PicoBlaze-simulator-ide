@@ -21,9 +21,7 @@ def get_tokens(lexer):
 
 
 def test_load(get_tokens):
-    tokens = get_tokens('LOAD s0, 123')
-
-    assert tokens == [
+    assert get_tokens('LOAD s0, 123') == [
         ('LOAD', 'LOAD'),
         ('REGISTER', 's0'),
         ('COMMA', ','),
@@ -32,9 +30,7 @@ def test_load(get_tokens):
 
 
 def test_add(get_tokens):
-    tokens = get_tokens('ADD s5, 23')
-
-    assert tokens == [
+    assert get_tokens('ADD s5, 23') == [
         ('ADD', 'ADD'),
         ('REGISTER', 's5'),
         ('COMMA', ','),
@@ -43,9 +39,7 @@ def test_add(get_tokens):
 
 
 def test_equ(get_tokens):
-    tokens = get_tokens('a EQU 123')
-
-    assert tokens == [
+    assert get_tokens('a EQU 123') == [
         ('NAME', 'a'),
         ('EQU', 'EQU'),
         ('NUMBER', 123)
@@ -53,18 +47,14 @@ def test_equ(get_tokens):
 
 
 def test_jump_to_address(get_tokens):
-    tokens = get_tokens('JUMP 123')
-
-    assert tokens == [
+    assert get_tokens('JUMP 123') == [
         ('JUMP', 'JUMP'),
         ('NUMBER', 123)
     ]
 
 
 def test_jump_to_label(get_tokens):
-    tokens = get_tokens('JUMP foo')
-
-    assert tokens == [
+    assert get_tokens('JUMP foo') == [
         ('JUMP', 'JUMP'),
         ('NAME', 'foo')
     ]
