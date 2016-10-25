@@ -1,7 +1,10 @@
-# PicoBlade-asm
-This project aims to create an IDE for PicoBlade (8 bit processor) assembly.
+# PicoBlaze simulator & IDE
+This project aims to create a simulator and IDE for PicoBlaze (8 bit processor) assembly.
+
 
 ...this might be a longish process so we will see how it goes. It might end up with just PicoBlade assembly simulator...
+
+The PicoBlaze user guide can be found [here](http://www.xilinx.com/support/documentation/ip_documentation/ug129.pdf).
 
 
 Steps that will be done here:
