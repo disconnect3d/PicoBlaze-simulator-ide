@@ -93,3 +93,4 @@ ENV/
 
 # Produced by .ply
 parser.out
+parsetab.py
