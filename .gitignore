@@ -87,3 +87,9 @@ ENV/
 
 # Rope project settings
 .ropeproject
+
+# Idea PyCharmp roject settings
+.idea
+
+# Produced by .ply
+parser.out
