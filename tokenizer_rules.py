@@ -1,20 +1,17 @@
+# this file is used by ply.lex
 
 tokens = (
-    'LOAD', 'ADD', 'JUMP', 'EQU', 'COMMENT', 'COMMA',
-    'REGISTER', 'NAME', 'LABEL', 'NUMBER',
+    'COMMENT', 'COMMA', 'REGISTER', 'LABEL', 'NUMBER', 'NAME',
 )
 
-# Instructions
-t_LOAD = r'LOAD'
-t_ADD = r'ADD'
-t_JUMP = r'JUMP'
-t_EQU = r'EQU'
-
-# Other tokens
 t_COMMA = r','
-t_REGISTER = r's([0-9]|1[0-5])'
-#t_NAME = r'[A-Za-z][A-Za-z0-9]*'
 t_LABEL = r'[A-Za-z][A-Za-z0-9]*:'
+t_NAME = r'[A-Za-z][A-Za-z0-9]*'
+
+
+def t_REGISTER(t):
+    r's([0-9]|1[0-5])'
+    return t
 
 
 def t_NUMBER(t):
@@ -32,6 +29,7 @@ def t_NUMBER(t):
 def t_COMMENT(t):
     r';.*'
     pass
+
 
 # Ignored characters
 t_ignore = " \t"

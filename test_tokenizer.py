@@ -20,9 +20,13 @@ def get_tokens(lexer):
     return _tokens_gen
 
 
+def test_comment(get_tokens):
+    assert get_tokens('; this should not be added to tokens...') == []
+
+
 def test_load(get_tokens):
     assert get_tokens('LOAD s0, 123') == [
-        ('LOAD', 'LOAD'),
+        ('NAME', 'LOAD'),
         ('REGISTER', 's0'),
         ('COMMA', ','),
         ('NUMBER', 123)
@@ -31,7 +35,7 @@ def test_load(get_tokens):
 
 def test_add(get_tokens):
     assert get_tokens('ADD s5, 23') == [
-        ('ADD', 'ADD'),
+        ('NAME', 'ADD'),
         ('REGISTER', 's5'),
         ('COMMA', ','),
         ('NUMBER', 23)
@@ -41,20 +45,20 @@ def test_add(get_tokens):
 def test_equ(get_tokens):
     assert get_tokens('a EQU 123') == [
         ('NAME', 'a'),
-        ('EQU', 'EQU'),
+        ('NAME', 'EQU'),
         ('NUMBER', 123)
     ]
 
 
 def test_jump_to_address(get_tokens):
     assert get_tokens('JUMP 123') == [
-        ('JUMP', 'JUMP'),
+        ('NAME', 'JUMP'),
         ('NUMBER', 123)
     ]
 
 
 def test_jump_to_label(get_tokens):
     assert get_tokens('JUMP foo') == [
-        ('JUMP', 'JUMP'),
+        ('NAME', 'JUMP'),
         ('NAME', 'foo')
     ]
