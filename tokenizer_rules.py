@@ -1,7 +1,7 @@
 
 tokens = (
-    'LOAD', 'ADD', 'JUMP', 'EQU', 'COMMENT',
-    'NAME', 'LABEL', 'NUMBER',
+    'LOAD', 'ADD', 'JUMP', 'EQU', 'COMMENT', 'COMMA',
+    'REGISTER', 'NAME', 'LABEL', 'NUMBER',
 )
 
 # Instructions
@@ -11,7 +11,9 @@ t_JUMP = r'JUMP'
 t_EQU = r'EQU'
 
 # Other tokens
-t_NAME = r'[A-Za-z][A-Za-z0-9]*'
+t_COMMA = r','
+t_REGISTER = r's([0-9]|1[0-5])'
+#t_NAME = r'[A-Za-z][A-Za-z0-9]*'
 t_LABEL = r'[A-Za-z][A-Za-z0-9]*:'
 
 
