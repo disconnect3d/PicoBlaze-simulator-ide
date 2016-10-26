@@ -2,10 +2,11 @@
 This project aims to create a simulator and IDE for PicoBlaze (8 bit processor) assembly.
 
 
-...this might be a longish process so we will see how it goes. It might end up with just PicoBlade assembly simulator...
+...this might be a longish process so we will see how it goes. It might end up with just PicoBlaze assembly simulator...
 
 The PicoBlaze user guide can be found [here](http://www.xilinx.com/support/documentation/ip_documentation/ug129.pdf).
 
+NOTE: I am not yet sure whether this will use KCPSM3 or pBlazIDE mnemonics (if you want to read more about this, see page 71 of the PicoBlaze user guide linked above).
 
 Steps that will be done here:
 
