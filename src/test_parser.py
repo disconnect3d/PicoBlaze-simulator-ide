@@ -2,8 +2,8 @@ import pytest
 from parser_rules import Parser
 from ply import lex, yacc
 
-from src import tokenizer_rules
-from src.tokenizer_rules import tokens
+import tokenizer_rules
+from tokenizer_rules import tokens
 
 
 @pytest.fixture(scope='session')
@@ -12,15 +12,20 @@ def parser():
     # So instead we pass it as module and just add there the tokens.
     p = Parser()
     p.tokens = tokens
-    lex.lex(module=tokenizer_rules)
-    return yacc.yacc(module=p)
+    return p
 
 
 @pytest.fixture(scope='session')
-def parse(parser):
+def ply_yacc(parser):
+    lex.lex(module=tokenizer_rules)
+    return yacc.yacc(module=parser)
+
+
+@pytest.fixture(scope='session')
+def parse(ply_yacc, parser):
     def _parse(input_string):
-        parser.parse(input_string)
-        return parser
+        ply_yacc.parse(input_string)
+        return parser.instructions
 
     return _parse
 

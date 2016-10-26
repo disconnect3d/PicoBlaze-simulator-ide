@@ -13,7 +13,7 @@ class Parser(object):
 
     def p_equ_instruction(self, p):
         """equ_instruction : NAME INSTRUCTION NUMBER"""
-        print("EQu inst", p)
+        print("EQu inst", p, p[0], p[1], p[2], p[3])
         return p
 
 
