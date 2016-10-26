@@ -2,7 +2,7 @@
 from errors import TokenizeException
 
 tokens = (
-    'INSTRUCTION', 'COMMA', 'REGISTER', 'LABEL', 'NUMBER', 'NAME', 'COMMENT'
+    'INSTRUCTION', 'DIRECTIVE', 'COMMA', 'REGISTER', 'LABEL', 'NUMBER', 'NAME', 'COMMENT'
 )
 
 t_COMMA = r','
@@ -15,8 +15,14 @@ def t_REGISTER(t):
     return t
 
 
+def t_DIRECTIVE(t):
+    r'(?i)ORG|EQU'
+    t.value = t.value.upper()
+    return t
+
+
 def t_INSTRUCTION(t):
-    r'(?i)LOAD|ADD|JUMP|EQU'
+    r'(?i)LOAD|STORE|FETCH|JUMP|CALL|RETI|RET|ADDC|ADD|SUBC|SUB|XOR|OR|AND|IN|OUT|EINT|DINT|COMP'
     t.value = t.value.upper()
     return t
 
