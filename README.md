@@ -24,6 +24,8 @@ The PicoBlaze user guide can be found [here](http://www.xilinx.com/support/docum
 
 * IDE (???)
 
+For "already implemented stuff" check `src/test_*` files.
+
 I would also aim to test more or less most of the stuff here. The testcases are created with [pytest](http://doc.pytest.org/en/latest/).
 
 ### Requirements
@@ -34,7 +36,7 @@ pip install -r requirements.txt
 ```
 
 ### Launching
-Currently the only thing that can be launched are tests. To launch them fire:
+Currently the only thing that can be launched are tests. To launch them get into `src` directory and fire:
 ```
-py.test .
+py.test . -v  
 ```
