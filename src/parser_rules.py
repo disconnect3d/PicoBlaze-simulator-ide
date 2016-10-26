@@ -1,6 +1,6 @@
 # this file is used by ply.yacc
 from errors import ParseException
-from mnemonics import AVAILABLE_INSTRUCTIONS, Equ, Org
+from mnemonics import MNEMONICS, EQU, ORG, LABEL
 
 
 class Parser(object):
@@ -15,12 +15,12 @@ class Parser(object):
         return self._instructions
 
     def _add_code(self, instruction):
-        self._instructions.append(instruction)
-
+        self._instructions.insert(0, instruction)
 
     def p_line(self, p):
         """line : instruction
-                | directive"""
+                | directive
+                | label"""
         print('instruction', p)
         return p
 
@@ -32,10 +32,10 @@ class Parser(object):
         print("normal instruction", p)
         _, instruction, arg1, _, arg2 = p
 
-        if instruction not in AVAILABLE_INSTRUCTIONS:
+        if instruction not in MNEMONICS:
             raise ParseException('Unrecognized instruction: %s' % instruction)
 
-        instruction_obj = AVAILABLE_INSTRUCTIONS[instruction](arg1, arg2)
+        instruction_obj = MNEMONICS[instruction](arg1, arg2)
 
         self._add_code(instruction_obj)
 
@@ -48,24 +48,33 @@ class Parser(object):
 
     def p_org_directive(self, p):
         """org_directive : DIRECTIVE NUMBER"""
-        _, directive, address = p
+        _, directive, addr = p
 
         if directive != 'ORG':
             raise ParseException('Incorrect directive, ORG expected')
 
-        self._add_code(Org(address=address))
+        self._add_code(ORG(addr=addr))
 
         return p
 
     def p_equ_directive(self, p):
         """equ_directive : NAME DIRECTIVE NUMBER
                          | NAME DIRECTIVE REGISTER"""
-        _, name, directive, value = p
+        _, name, directive, arg = p
 
         if directive != 'EQU':
             raise ParseException('Incorrect instruction, EQU expected.')
 
-        self._add_code(Equ(alias=name, value=value))
+        self._add_code(EQU(alias=name, arg=arg))
+
+        return p
+
+    def p_label(self, p):
+        """label : LABEL
+                 | LABEL instruction"""
+        _, label, *_ = p
+
+        self._add_code(LABEL(alias=label))
 
         return p
 

@@ -1,11 +1,23 @@
 from collections import namedtuple
 
 
-Load = namedtuple('Load', ('register', 'reg_or_val'))
+LOAD = namedtuple('LOAD', ('reg', 'reg_or_val'))
 
-Equ = namedtuple('Equ', ('alias', 'value'))
-Org = namedtuple('Org', ('address',))
+EQU = namedtuple('EQU', ('alias', 'arg'))
+ORG = namedtuple('ORG', ('addr',))
 
-AVAILABLE_INSTRUCTIONS = {
-    i: i.__name__.upper() for i in (Equ, Load)
+SUB = namedtuple('SUB', ('reg', 'arg'))
+ADD = namedtuple('ADD', ('reg', 'arg'))
+
+ADDC = namedtuple('ADDC', ('reg', 'arg'))
+SUBC = namedtuple('SUBC', ('reg', 'arg'))
+
+XOR = namedtuple('XOR', ('reg', 'arg'))
+OR = namedtuple('OR', ('reg', 'arg'))
+AND = namedtuple('AND', ('reg', 'arg'))
+
+LABEL = namedtuple('LABEL', ('alias',))
+
+MNEMONICS = {
+    i.__name__: i for i in (LOAD, EQU, ORG, SUB, ADD, ADDC, SUBC, XOR, OR, AND, LABEL)
 }
