@@ -1,5 +1,7 @@
 from collections import namedtuple
 
 
-EQU = namedtuple('alias', 'value')
-LOAD = namedtuple('register', 'address')
+Equ = namedtuple('Equ', ('alias', 'value'))
+Load = namedtuple('Load', ('register', 'address'))
+
+AVAILABLE_INSTRUCTIONS = (Equ, Load)

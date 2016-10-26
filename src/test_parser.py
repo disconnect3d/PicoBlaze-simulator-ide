@@ -1,4 +1,6 @@
 import pytest
+
+from instructions import Equ
 from parser_rules import Parser
 from ply import lex, yacc
 
@@ -31,6 +33,6 @@ def parse(ply_yacc, parser):
 
 
 def test_equ(parse):
-    assert parse("variable_name EQU 10") == []
+    assert parse("variable_name EQU 10") == [Equ(alias='variable_name', value=10)]
 
 
