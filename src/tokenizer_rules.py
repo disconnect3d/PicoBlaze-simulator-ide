@@ -1,33 +1,43 @@
 # this file is used by ply.lex
+from errors import TokenizeException
 
 tokens = (
     'INSTRUCTION', 'COMMA', 'REGISTER', 'LABEL', 'NUMBER', 'NAME', 'COMMENT'
 )
 
 t_COMMA = r','
-t_LABEL = r'[A-Za-z_][A-Za-z0-9_]*:'
 t_NAME = r'[A-Za-z_][A-Za-z0-9_]*'
 
 
 def t_REGISTER(t):
-    r's([0-9]|1[0-5])'
+    r'(?i)s((1[0-5]|[0-9])|(?i)[a-f])'
+    t.value = t.value.upper()
     return t
 
 
 def t_INSTRUCTION(t):
-    r'LOAD|ADD|JUMP|EQU'
+    r'(?i)LOAD|ADD|JUMP|EQU'
+    t.value = t.value.upper()
     return t
 
 
 def t_NUMBER(t):
-    r'\d+'
-
+    r'\d+|[$](?i)[0-9a-f]+'
     try:
-        t.value = int(t.value)
+        if t.value[0] == '$':
+            t.value = int(t.value[1:], 16)
+        else:
+            t.value = int(t.value)
     except ValueError:
         print("ValueError this isnt a number")
         t.value = 0
 
+    return t
+
+
+def t_LABEL(t):
+    r'[A-Za-z_][A-Za-z0-9_]*:'
+    t.value = t.value[:-1]  # truncates ':'
     return t
 
 
@@ -46,5 +56,4 @@ def t_newline(t):
 
 
 def t_error(t):
-    print("Illegal character '%s'" % t.value[0])
-    t.lexer.skip(1)
+    raise TokenizeException("Illegal character '%s'" % t.value[0])

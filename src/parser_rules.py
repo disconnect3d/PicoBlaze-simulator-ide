@@ -1,9 +1,6 @@
 # this file is used by ply.yacc
+from errors import ParseException
 from instructions import AVAILABLE_INSTRUCTIONS, Equ
-
-
-class ParseException(Exception):
-    pass
 
 
 class Parser(object):
@@ -45,4 +42,4 @@ class Parser(object):
 
     # Error rule for syntax errors
     def p_error(self, p):
-        print("Syntax error in input: ", p)
+        raise ParseException("Syntax error in input: '%s'" % p)
