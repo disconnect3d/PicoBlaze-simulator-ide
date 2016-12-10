@@ -1,8 +1,8 @@
 import pytest
 from ply import lex
 
-import tokenizer_rules
-from errors import TokenizeException
+import src.tokenizer_rules as tokenizer_rules
+from src.errors import TokenizeException
 
 
 @pytest.fixture(scope='session')

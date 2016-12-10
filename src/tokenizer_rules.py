@@ -1,5 +1,5 @@
 # this file is used by ply.lex
-from errors import TokenizeException
+from .errors import TokenizeException
 
 tokens = (
     'INSTRUCTION', 'DIRECTIVE', 'COMMA', 'REGISTER', 'LABEL', 'NUMBER', 'NAME', 'COMMENT'
