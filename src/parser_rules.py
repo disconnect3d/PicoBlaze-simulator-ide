@@ -1,6 +1,6 @@
 # this file is used by ply.yacc
-from errors import ParseException
-from mnemonics import MNEMONICS, EQU, ORG, LABEL
+from src.errors import ParseException
+from src.mnemonics import MNEMONICS, EQU, ORG, LABEL
 
 
 class Parser(object):
@@ -65,7 +65,7 @@ class Parser(object):
         if directive != 'EQU':
             raise ParseException('Incorrect instruction, EQU expected.')
 
-        self._add_code(EQU(alias=name, arg=arg))
+        self._add_code(EQU1(alias=name, arg=arg))
 
         return p
 
