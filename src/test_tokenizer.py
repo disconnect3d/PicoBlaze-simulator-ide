@@ -40,15 +40,15 @@ def test_instructions(get_tokens):
     '''
     instructions = 'STORE FETCH JUMP CALL RET RETI ADD ADDC SUB SUBC XOR OR AND IN OUT EINT DINT COMP'
 
-    expected = [('INSTRUCTION', 'LOAD')] * 5
-    expected += [('INSTRUCTION', 'ADD')] * 6
+    expected = [('LOAD', 'LOAD')] * 5
+    expected += [('ADD', 'ADD')] * 6
     assert get_tokens(code) == expected
-    assert get_tokens(instructions) == [('INSTRUCTION', instr) for instr in instructions.split(' ')]
+    assert get_tokens(instructions) == [(instr, instr) for instr in instructions.split(' ')]
 
 
 def test_directives(get_tokens):
-    assert get_tokens('EQU equ EqU') == [('DIRECTIVE', 'EQU')] * 3
-    assert get_tokens('ORG org oRg') == [('DIRECTIVE', 'ORG')] * 3
+    assert get_tokens('EQU equ EqU') == [('EQU', 'EQU')] * 3
+    assert get_tokens('ORG org oRg') == [('ORG', 'ORG')] * 3
 
 
 def test_registers(get_tokens):

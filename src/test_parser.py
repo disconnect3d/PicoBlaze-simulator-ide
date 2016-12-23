@@ -3,7 +3,7 @@ from ply import lex, yacc
 
 import src.tokenizer_rules as tokenizer_rules
 from src.errors import ParseException
-from src.mnemonics import EQU1, ORG, LABEL, SUB1
+from src.mnemonics import EQU, ORG, LABEL, SUB
 from src.parser_rules import Parser
 
 
@@ -40,7 +40,7 @@ def test_bad_parsing(parse):
 
 
 def test_equ_directive(parse):
-    assert parse('variable_name EQU 10') == [EQU1(alias='variable_name', arg=10)]
+    assert parse('variable_name EQU 10') == [EQU(alias='variable_name', arg=10)]
 
 
 def test_org_directive(parse):
@@ -54,5 +54,5 @@ def test_label(parse):
 def test_label_with_instruction(parse):
     assert parse('sleep_loop: SUB s0, 1') == [
         LABEL(alias='sleep_loop'),
-        SUB1(reg='S0', arg=1)
+        SUB(reg='S0', arg=1)
     ]

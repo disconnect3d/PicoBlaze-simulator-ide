@@ -1,31 +1,21 @@
 # this file is used by ply.lex
-from .errors import TokenizeException
+from src.errors import TokenizeException
+from src.mnemonics import MNEMONICS
 
 tokens = (
-    'INSTRUCTION', 'DIRECTIVE', 'COMMA', 'REGISTER', 'LABEL', 'NUMBER', 'NAME', 'COMMENT'
+    *[i.__name__ for i in MNEMONICS.values()], 'COMMA', 'REGISTER', 'LABEL', 'NUMBER', 'NAME', 'COMMENT'
 )
+
+for i in MNEMONICS.values():
+    exec("def t_%s(t):\n    r'(?i)\\b%s\\b'\n    t.value = t.value.upper()\n    return t" % (i.__name__, i.__name__))
 
 t_COMMA = r','
 t_NAME = r'[A-Za-z_][A-Za-z0-9_]*'
-
 
 def t_REGISTER(t):
     r'(?i)s((1[0-5]|[0-9])|(?i)[a-f])'
     t.value = t.value.upper()
     return t
-
-
-def t_DIRECTIVE(t):
-    r'(?i)ORG|EQU'
-    t.value = t.value.upper()
-    return t
-
-
-def t_INSTRUCTION(t):
-    r'(?i)LOAD|STORE|FETCH|JUMP|CALL|RETI|RET|ADDC|ADD|SUBC|SUB|XOR|OR|AND|IN|OUT|EINT|DINT|COMP'
-    t.value = t.value.upper()
-    return t
-
 
 def t_NUMBER(t):
     r'\d+|[$](?i)[0-9a-f]+'

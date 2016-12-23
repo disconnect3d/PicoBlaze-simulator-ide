@@ -1,6 +1,6 @@
 # this file is used by ply.yacc
-from .errors import ParseException
-from .mnemonics import MNEMONICS, EQU1, ORG, LABEL
+from src.errors import ParseException
+from src.mnemonics import MNEMONICS, EQU, ORG, LABEL
 
 
 class Parser(object):

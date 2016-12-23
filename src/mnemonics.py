@@ -1,6 +1,7 @@
 from collections import namedtuple
 
 """
+TODO move
 reg - One of 16 possible register locations ranging from s0 through sF or specified as a literal
 
 aaa - 10-bit address, specified either as a literal or a three-digit hexadecimal value ranging
@@ -18,41 +19,32 @@ ss - 6-bit scratchpad RAM address, specified either as a literal or a two-digit 
 
 """ INSTRUCTIONS """
 
-ADD1 = namedtuple('ADD', ('reg', 'kk'))
-ADD2 = namedtuple('ADD', ('reg', 'reg2'))
+ADD = namedtuple('ADD', ('reg', 'reg_or_val'))
 
-ADDC1 = namedtuple('ADDC', ('reg', 'kk'))
-ADDC2 = namedtuple('ADDC', ('reg', 'reg2'))
+ADDC = namedtuple('ADDC', ('reg', 'reg_or_val'))
 
-AND1 = namedtuple('AND', ('reg', 'kk'))
-AND2 = namedtuple('AND', ('reg', 'reg2'))
+AND = namedtuple('AND', ('reg', 'reg_or_val'))
 
-CALL = namedtuple('CALL', ('aaa',))
-CALLX = namedtuple('CALL', ('flag', 'aaa'))
+CALL = namedtuple('CALL', ('literal',))
+CALLX = namedtuple('CALL', ('flag', 'literal'))
 
-COMP1 = namedtuple('COMP', ('reg', 'kk'))
-COMP2 = namedtuple('COMP', ('reg', 'reg2'))
+COMP = namedtuple('COMP', ('reg', 'reg_or_val'))
 
 DINT = namedtuple('DINT', ())
 EINT = namedtuple('EINT', ())
 
-FETCH1 = namedtuple('FETCH', ('reg', 'ss'))
-FETCH2 = namedtuple('FETCH', ('reg', 'reg2'))
+FETCH = namedtuple('FETCH', ('reg', 'reg_or_val'))
 
-IN1 = namedtuple('IN', ('reg', 'reg2'))
-IN2 = namedtuple('IN', ('reg', 'pp'))
+IN = namedtuple('IN', ('reg', 'reg_or_val'))
 
-JUMP = namedtuple('JUMP', ('aaa',))
-JUMPX = namedtuple('JUMP', ('flag', 'aaa'))
+JUMP = namedtuple('JUMP', ('literal',))
+JUMPX = namedtuple('JUMP', ('flag', 'literal'))
 
-LOAD1 = namedtuple('LOAD', ('reg', 'kk'))
-LOAD2 = namedtuple('LOAD', ('reg', 'reg2'))
+LOAD = namedtuple('LOAD', ('reg', 'reg_or_val'))
 
-OR1 = namedtuple('OR', ('reg', 'kk'))
-OR2 = namedtuple('OR', ('reg', 'reg2'))
+OR = namedtuple('OR', ('reg', 'reg_or_val'))
 
-OUT1 = namedtuple('OUT', ('reg', 'reg2'))
-OUT2 = namedtuple('OUT', ('reg', 'pp'))
+OUT = namedtuple('OUT', ('reg', 'reg_or_val'))
 
 RET = namedtuple('RET', ())
 RETX = namedtuple('RET', ('flag',))
@@ -71,27 +63,21 @@ SR1 = namedtuple('SR1', ('reg',))
 SRA = namedtuple('SRA', ('reg',))
 SRX = namedtuple('SRX', ('reg',))
 
-STORE1 = namedtuple('STORE', ('reg', 'ss'))
-STORE2 = namedtuple('STORE', ('reg', 'reg2'))
+STORE = namedtuple('STORE', ('reg', 'reg_or_val'))
 
-SUB1 = namedtuple('SUB', ('reg', 'kk'))
-SUB2 = namedtuple('SUB', ('reg', 'reg2'))
+SUB = namedtuple('SUB', ('reg', 'reg_or_val'))
 
-SUBC1 = namedtuple('SUBC', ('reg', 'kk'))
-SUBC2 = namedtuple('SUBC', ('reg', 'reg2'))
+SUBC = namedtuple('SUBC', ('reg', 'reg_or_val'))
 
-TEST1 = namedtuple('TEST', ('reg', 'kk'))
-TEST2 = namedtuple('TEST', ('reg', 'reg2'))
+TEST = namedtuple('TEST', ('reg', 'reg_or_val'))
 
-XOR1 = namedtuple('XOR', ('reg', 'kk'))
-XOR2 = namedtuple('XOR', ('reg', 'reg2'))
+XOR = namedtuple('XOR', ('reg', 'reg_or_val'))
 
 """ DIRECTIVES """
 
 ORG = namedtuple('ORG', ('addr',))
 
-EQU1 = namedtuple('EQU', ('alias', 'reg'))
-EQU2 = namedtuple('EQU', ('alias', 'kk'))
+EQU = namedtuple('EQU', ('alias', 'reg_or_val'))
 
 DSIN = namedtuple('DSIN', ('alias', 'pp'))
 DSOUT = namedtuple('DSOUT', ('alias', 'pp'))
@@ -100,9 +86,7 @@ DSIO = namedtuple('DSIO', ('alias', 'pp'))
 LABEL = namedtuple('LABEL', ('alias',))
 
 MNEMONICS = {
-    i.__name__: i for i in (ADD1, ADD2, ADDC1, ADDC2, AND1, AND2, CALL, CALLX, COMP1, COMP2, DINT, EINT, FETCH1, FETCH2,
-                            IN1, IN2, JUMP, JUMPX, LOAD1, LOAD2, OR1, OR2, OUT1, OUT2, RET, RETX, RETI, RL, SL0, SL1,
-                            SLA, SLX, RL, SR0, SR1, SRA, SRX, STORE1, STORE2, SUB1, SUB2, SUBC1, SUBC2, TEST1, TEST2,
-                            XOR1, XOR2, ORG, EQU1, EQU2, DSIN, DSOUT, DSIO
-                            )
+    i.__name__: i for i in (ADD, ADDC, AND, CALL, CALLX, COMP, DINT, EINT, FETCH, IN, JUMP, JUMPX, LOAD, OR, OUT, RET,
+                            RETX, RETI, RL, SL0, SL1, SLA, SLX, RL, SR0, SR1, SRA, SRX, STORE, SUB, SUBC, TEST, XOR,
+                            ORG, EQU, DSIN, DSOUT, DSIO)
 }
