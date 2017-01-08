@@ -2,20 +2,36 @@
 from src.errors import TokenizeException
 from src.mnemonics import MNEMONICS
 
+
+"""
+TODO fix it
+def generate_token(name):
+    def func(t):
+        t.value = t.value.upper()
+        return t
+    func.__name__ = 't_' + name
+    func.__doc__ = r'(?i)\\b%s\\b' % name
+    return func
+"""
+
 tokens = (
-    *[i.__name__ for i in MNEMONICS.values()], 'COMMA', 'REGISTER', 'LABEL', 'NUMBER', 'NAME', 'COMMENT'
+    *[i.__name__ for i in MNEMONICS.values()], 'COMMA', 'REGISTER', 'LABEL', 'NUMBER', 'NAME', 'COMMENT', 'INDICATOR',
+    'FLAG'
 )
 
 for i in MNEMONICS.values():
     exec("def t_%s(t):\n    r'(?i)\\b%s\\b'\n    t.value = t.value.upper()\n    return t" % (i.__name__, i.__name__))
+    #exec("t_%s = generate_token('%s')" % (i.__name__, i.__name__))
 
 t_COMMA = r','
 t_NAME = r'[A-Za-z_][A-Za-z0-9_]*'
+
 
 def t_REGISTER(t):
     r'(?i)s((1[0-5]|[0-9])|(?i)[a-f])'
     t.value = t.value.upper()
     return t
+
 
 def t_NUMBER(t):
     r'\d+|[$](?i)[0-9a-f]+'
@@ -39,7 +55,19 @@ def t_LABEL(t):
 
 def t_COMMENT(t):
     r';.*'
-    pass
+    return t
+
+
+def t_INDICATOR(t):
+    r'(?i)(\bC\b|\bNC\b|\bZ\b|\bNZ\b)'
+    t.value = t.value.upper()
+    return t
+
+
+def t_FLAG(t):
+    r'(?i)(\bENABLE\b|\bDISABLE\b)'
+    t.value = t.value.upper()
+    return t
 
 
 # Ignored characters
