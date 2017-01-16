@@ -376,4 +376,3 @@ class VirtualMachine(object):
                 self.print_parameters()
 
 
-v = VirtualMachine()

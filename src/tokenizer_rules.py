@@ -27,7 +27,7 @@ t_NAME = r'[A-Za-z_][A-Za-z0-9_]*'
 
 
 def t_REGISTER(t):
-    r'(?i)s((1[0-5]|[0-9])|(?i)[a-f])'
+    r'(?i)\bs((1[0-5]|[0-9])|(?i)[a-f])\b'
     t.value = t.value.upper()
     return t
 

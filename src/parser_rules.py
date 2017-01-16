@@ -41,7 +41,8 @@ class Parser(object):
                 | directive   inline_comment
                 | label       inline_comment
                 | label_instr inline_comment
-                | comment"""
+                | comment
+                | """
         return p
 
     def p_instruction(self, p):
@@ -275,4 +276,7 @@ class Parser(object):
 
     # Error rule for syntax errors
     def p_error(self, p):
-        raise ParseException('Parse error in input {0}:{1}: wrong symbol "{2}"'.format(p.lineno, p.lexpos, p.value))
+        if p is not None:
+            raise ParseException('Parse error in input {0}:{1}: wrong symbol "{2}"'.format(p.lineno, p.lexpos, p.value))
+        else:
+            print('Unexpected end of input')
