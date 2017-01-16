@@ -1,27 +1,26 @@
 # this file is used by ply.lex
 from src.errors import TokenizeException
-from src.mnemonics import MNEMONICS
+from src.mnemonics import MNEMONICS, ADD
 
 
-"""
-TODO fix it
-def generate_token(name):
-    def func(t):
-        t.value = t.value.upper()
-        return t
-    func.__name__ = 't_' + name
-    func.__doc__ = r'(?i)\\b%s\\b' % name
-    return func
-"""
+def name(v):
+    return v.__name__
 
 tokens = (
-    *[i.__name__ for i in MNEMONICS.values()], 'COMMA', 'REGISTER', 'LABEL', 'NUMBER', 'NAME', 'COMMENT', 'INDICATOR',
+    *[name(i) for i in MNEMONICS.values()], 'COMMA', 'REGISTER', 'LABEL', 'NUMBER', 'NAME', 'COMMENT', 'INDICATOR',
     'FLAG'
 )
 
+
+def generate_function_str(name):
+    function_str = "def t_%s(t):\n" % name
+    function_str += "    r'(?i)\\b%s\\b'\n" % name
+    function_str += "    t.value = t.value.upper()\n"
+    function_str += "    return t"
+    return function_str
+
 for i in MNEMONICS.values():
-    exec("def t_%s(t):\n    r'(?i)\\b%s\\b'\n    t.value = t.value.upper()\n    return t" % (i.__name__, i.__name__))
-    #exec("t_%s = generate_token('%s')" % (i.__name__, i.__name__))
+    exec(generate_function_str(name(i)))
 
 t_COMMA = r','
 t_NAME = r'[A-Za-z_][A-Za-z0-9_]*'

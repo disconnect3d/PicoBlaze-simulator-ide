@@ -105,8 +105,12 @@ class Parser(object):
     def p_jump_ind_instruction(self, p):
         """jump_ind_instruction : CALL NAME
                                 | CALL INDICATOR COMMA NAME
+                                | CALL NUMBER
+                                | CALL INDICATOR COMMA NUMBER
                                 | JUMP NAME
-                                | JUMP INDICATOR COMMA NAME"""
+                                | JUMP INDICATOR COMMA NAME
+                                | JUMP NUMBER
+                                | JUMP INDICATOR COMMA NUMBER"""
 
         arg2 = None
         if len(p) > 3:
