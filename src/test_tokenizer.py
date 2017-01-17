@@ -21,7 +21,7 @@ def get_tokens(lexer):
 
 
 def test_comment(get_tokens):
-    assert get_tokens('; this should not be added to tokens...') == []
+    assert get_tokens('; comment...') == [('COMMENT', '; comment...')]
 
 
 def test_numbers(get_tokens):
@@ -37,11 +37,13 @@ def test_instructions(get_tokens):
     code = '''
         LOAD load lOaD LoAD loaD
         ADD add Add ADd aDD adD
+        ADDC addc Addc ADdC aDDc adDC
     '''
     instructions = 'STORE FETCH JUMP CALL RET RETI ADD ADDC SUB SUBC XOR OR AND IN OUT EINT DINT COMP'
 
     expected = [('LOAD', 'LOAD')] * 5
     expected += [('ADD', 'ADD')] * 6
+    expected += [('ADDC', 'ADDC')] * 6
     assert get_tokens(code) == expected
     assert get_tokens(instructions) == [(instr, instr) for instr in instructions.split(' ')]
 
@@ -49,6 +51,9 @@ def test_instructions(get_tokens):
 def test_directives(get_tokens):
     assert get_tokens('EQU equ EqU') == [('EQU', 'EQU')] * 3
     assert get_tokens('ORG org oRg') == [('ORG', 'ORG')] * 3
+    assert get_tokens('DSIN dsin dSiN') == [('DSIN', 'DSIN')] * 3
+    assert get_tokens('DSOUT dsout dSoUt') == [('DSOUT', 'DSOUT')] * 3
+    assert get_tokens('DSIO dsio DsIo') == [('DSIO', 'DSIO')] * 3
 
 
 def test_registers(get_tokens):
@@ -77,3 +82,21 @@ def test_unrecognized_token(get_tokens):
     for suffix in '@#$%^&*()':
         with pytest.raises(TokenizeException):
             get_tokens(' name%s ' % suffix)
+
+
+def test_name(get_tokens):
+    assert get_tokens('Something else but these should be names') == [
+        ('NAME', n) for n in ('Something', 'else', 'but', 'these', 'should', 'be', 'names')
+        ]
+
+
+def test_indicators(get_tokens):
+    assert get_tokens('z nz c nc Z NZ C NC nZ nC Nz Nc') == [
+        ('INDICATOR', i) for i in ('Z', 'NZ', 'C', 'NC', 'Z', 'NZ', 'C', 'NC', 'NZ', 'NC', 'NZ', 'NC')
+    ]
+
+
+def test_flags(get_tokens):
+    assert get_tokens('ENABLE enable eNaBlE') == [('FLAG', 'ENABLE')]*3
+    assert get_tokens('DISABLE disable DiSaBlE') == [('FLAG', 'DISABLE')]*3
+

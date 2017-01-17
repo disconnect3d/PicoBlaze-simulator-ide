@@ -8,7 +8,7 @@ ADDC = namedtuple('ADDC', ('reg', 'reg_or_val'))
 
 AND = namedtuple('AND', ('reg', 'reg_or_val'))
 
-CALL = namedtuple('CALL', ('label_or_ind', 'label'))
+CALL = namedtuple('CALL', ('label_or_ind', 'label_or_addr'))
 
 COMP = namedtuple('COMP', ('reg', 'reg_or_val'))
 
@@ -19,7 +19,7 @@ FETCH = namedtuple('FETCH', ('reg', 'reg_or_val'))
 
 IN = namedtuple('IN', ('reg', 'reg_or_val'))
 
-JUMP = namedtuple('JUMP', ('label_or_ind', 'label'))
+JUMP = namedtuple('JUMP', ('label_or_ind', 'label_or_addr'))
 
 LOAD = namedtuple('LOAD', ('reg', 'reg_or_val'))
 

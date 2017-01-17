@@ -242,37 +242,69 @@ class VirtualMachine(object):
 
     def _handle_JUMP(self, *args):
         if args[1] is not None:
-            if args[1] not in self._labels.keys():
-                raise KeyError('Error in address {0}: no such label "{1}"'.format(str(self._program_cnt), args[1]))
+            if type(args[1]) is str:
+                if args[1] not in self._labels.keys():
+                    raise KeyError('Error in address {0}: no such label "{1}"'.format(str(self._program_cnt), args[1]))
+                else:
+                    arg2 = self._labels[args[1]]
+            else:
+                if args[1] < 0 or args[1] > 1023:
+                    raise ValueError('Error in address {0}: no such address "{1}"'.format(str(self._program_cnt), args[1]))
+                else:
+                    arg2 = args[1]
             if args[0] == 'Z' and self._zero == 1 or \
                args[0] == 'NZ' and self._zero == 0 or \
                args[0] == 'C' and self._carry == 1 or \
                args[0] == 'NC' and self._carry == 0:
-                self._program_cnt = self._labels[args[1]]
+                self._program_cnt = arg2
             else:
                 self._program_cnt += 1
         else:
-            if args[0] not in self._labels.keys():
-                raise KeyError('Error in address {0}: no such label "{1}"'.format(str(self._program_cnt), args[0]))
-            self._program_cnt = self._labels[args[0]]
+            if type(args[0]) is str:
+                if args[0] not in self._labels.keys():
+                    raise KeyError('Error in address {0}: no such label "{1}"'.format(str(self._program_cnt), args[0]))
+                else:
+                    arg1 = self._labels[args[0]]
+            else:
+                if args[0] < 0 or args[0] > 1023:
+                    raise ValueError('Error in address {0}: no such address "{1}"'.format(str(self._program_cnt), args[0]))
+                else:
+                    arg1 = args[0]
+            self._program_cnt = arg1
 
     def _handle_CALL(self, *args):
         if args[1] is not None:
-            if args[1] not in self._labels.keys():
-                raise KeyError('Error in address {0}: no such label "{1}"'.format(str(self._program_cnt), args[1]))
+            if type(args[1]) is str:
+                if args[1] not in self._labels.keys():
+                    raise KeyError('Error in address {0}: no such label "{1}"'.format(str(self._program_cnt), args[1]))
+                else:
+                    arg2 = self._labels[args[1]]
+            else:
+                if args[1] < 0 or args[1] > 1023:
+                    raise ValueError('Error in address {0}: no such address "{1}"'.format(str(self._program_cnt), args[1]))
+                else:
+                    arg2 = args[1]
             if args[0] == 'Z' and self._zero == 1 or \
                args[0] == 'NZ' and self._zero == 0 or \
                args[0] == 'C' and self._carry == 1 or \
                args[0] == 'NC' and self._carry == 0:
                 self._stack.append(self._program_cnt)
-                self._program_cnt = self._labels[args[1]]
+                self._program_cnt = arg2
             else:
                 self._program_cnt += 1
         else:
-            if args[0] not in self._labels.keys():
-                raise KeyError('Error in address {0}: no such label "{1}"'.format(str(self._program_cnt), args[0]))
+            if type(args[0]) is str:
+                if args[0] not in self._labels.keys():
+                    raise KeyError('Error in address {0}: no such label "{1}"'.format(str(self._program_cnt), args[0]))
+                else:
+                    arg1 = self._labels[args[0]]
+            else:
+                if args[0] < 0 or args[0] > 1023:
+                    raise ValueError('Error in address {0}: no such address "{1}"'.format(str(self._program_cnt), args[0]))
+                else:
+                    arg1 = args[0]
             self._stack.append(self._program_cnt)
-            self._program_cnt = self._labels[args[0]]
+            self._program_cnt = arg1
 
     def _handle_RET(self, *args):
         if args[0] is not None:
@@ -344,4 +376,3 @@ class VirtualMachine(object):
                 self.print_parameters()
 
 
-v = VirtualMachine()

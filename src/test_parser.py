@@ -188,19 +188,27 @@ def test_XOR_reg(parse):
 
 
 def test_CALL(parse):
-    assert parse('CALL place')[0] == CALL(label_or_ind='place', label=None)
+    assert parse('CALL place')[0] == CALL(label_or_ind='place', label_or_addr=None)
 
 
 def test_CALL_ind(parse):
-    assert parse('call Nz, place')[0] == CALL(label_or_ind='NZ', label='place')
+    assert parse('call Nz, place')[0] == CALL(label_or_ind='NZ', label_or_addr='place')
+
+
+def test_CALL_addr(parse):
+    assert parse('call Nz, $3FF')[0] == CALL(label_or_ind='NZ', label_or_addr=1023)
 
 
 def test_JUMP(parse):
-    assert parse('jump place')[0] == JUMP(label_or_ind='place', label=None)
+    assert parse('jump place')[0] == JUMP(label_or_ind='place', label_or_addr=None)
 
 
 def test_JUMP_ind(parse):
-    assert parse('JUMP Z, place')[0] == JUMP(label_or_ind='Z', label='place')
+    assert parse('JUMP Z, place')[0] == JUMP(label_or_ind='Z', label_or_addr='place')
+
+
+def test_JUMP_addr(parse):
+    assert parse('JUMP Z, $3FF')[0] == JUMP(label_or_ind='Z', label_or_addr=1023)
 
 
 def test_RET(parse):
