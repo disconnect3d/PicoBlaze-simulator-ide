@@ -1,6 +1,13 @@
 # PicoBlaze simulator & IDE
-This project aims to create a simulator and IDE for PicoBlaze (8 bit processor) assembly.
 
+TLDR: This was an idea to create PicoBlaze 8-bit assembly simulator and IDE. It ended up only as a simulator.
+
+See the source code to learn more; some of the README below might also be helpful (e.g. the PicoBlaze user guide).
+
+
+## Old stuff
+
+This project aims to create a simulator and IDE for PicoBlaze (8 bit processor) assembly.
 
 ...this might be a longish process so we will see how it goes. It might end up with just PicoBlaze assembly simulator...
 
